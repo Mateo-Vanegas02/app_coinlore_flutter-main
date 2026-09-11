@@ -1,0 +1,10 @@
+{
+  "java.import.exclusions": [
+    "**/android/**",
+    "**/ios/**",
+    "**/web/**",
+    "**/linux/**",
+    "**/macos/**",
+    "**/windows/**"
+  ]
+}
