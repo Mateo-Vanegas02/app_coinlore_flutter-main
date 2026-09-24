@@ -5,6 +5,7 @@ import '../../../settings/presentation/providers/settings_provider.dart';
 import '../../../search/presentation/widgets/search_modal.dart';
 import '../widgets/crypto_table.dart';
 import '../widgets/top_gainers_sidebar.dart';
+import '../../../charts/presentation/screens/charts_menu_screen.dart';
 
 class CryptoListScreen extends ConsumerStatefulWidget {
   const CryptoListScreen({super.key});
@@ -48,6 +49,15 @@ class _CryptoListScreenState extends ConsumerState<CryptoListScreen> {
           ],
         ),
         actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ChartsMenuScreen()),
+              );
+            },
+            child: const Text('MPAndroidChart'),
+          ),
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () => _openSearch(context),
