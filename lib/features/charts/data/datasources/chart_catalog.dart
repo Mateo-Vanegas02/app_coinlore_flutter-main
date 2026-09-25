@@ -548,26 +548,26 @@ class ChartCatalog {
     // AVANZADOS (12)
     ChartItem(
       title: '1. Combined Chart',
-      description: 'Barras + Línea',
-      icon: Icons.insights,
+      description: 'Barras + Línea + Scatter',
+      icon: Icons.stacked_bar_chart,
       isAdvanced: true,
-      dataSource: 'Real',
+      dataSource: 'Simulado',
       buildConfig: (cryptos) {
-        // En Android, pasamos "combined" y usaría los 2 tipos, pero nuestra implementación básica de Kotlin 
-        // requeriría un parsing más complejo. Usamos line+bar en el dataset si lo soportaramos.
-        // Simulamos con un bar chart múltiple por simplicidad del ejemplo si la vista nativa no está 100% implementada para esto
         return ChartConfig(
-          chartType: 'bar',
+          chartType: 'combined',
           animateY: 1000,
           data: {
+            // Pasamos datasets de barra, línea y scatter. Asumimos soporte o mock.
             'datasets': [
               {
-                'label': 'Barras',
+                'type': 'bar',
+                'label': 'Volumen',
                 'color': '#4CAF50',
                 'entries': List.generate(5, (i) => {'x': i, 'y': 100 + i*10}),
               },
               {
-                'label': 'Línea Simulada',
+                'type': 'line',
+                'label': 'Precio',
                 'color': '#F44336',
                 'entries': List.generate(5, (i) => {'x': i+0.2, 'y': 80 + i*15}),
               }
@@ -576,30 +576,277 @@ class ChartCatalog {
         );
       },
     ),
-    // Simulo los otros 11 avanzados
-    for (int i = 2; i <= 12; i++) 
-      ChartItem(
-        title: '$i. Gráfico Avanzado',
-        description: 'Demostración de gráfico avanzado $i',
-        icon: Icons.auto_graph,
-        isAdvanced: true,
-        dataSource: 'Simulado',
-        buildConfig: (cryptos) {
-          return ChartConfig(
-            chartType: 'line',
-            animateX: 1000,
-            data: {
-              'datasets': [
-                {
-                  'label': 'Data Avanzada',
-                  'color': '#607D8B',
-                  'mode': 'cubic',
-                  'entries': List.generate(50, (j) => {'x': j, 'y': sin(j*0.5) * 50 + 50}),
-                }
-              ]
-            }
-          );
-        },
-      ),
+    ChartItem(
+      title: '2. Doble Eje Y',
+      description: 'Escalas Izquierda/Derecha distintas',
+      icon: Icons.compare_arrows,
+      isAdvanced: true,
+      dataSource: 'Real',
+      buildConfig: (cryptos) {
+        final p = cryptos.isNotEmpty ? cryptos.first.priceUsd : 100.0;
+        final v = cryptos.isNotEmpty ? cryptos.first.volume24 : 50000.0;
+        return ChartConfig(
+          chartType: 'line',
+          animateX: 1000,
+          data: {
+            'datasets': [
+              {
+                'label': 'Precio (Izq)',
+                'color': '#2196F3',
+                'axisDependency': 'left',
+                'entries': List.generate(10, (i) => {'x': i, 'y': p + i * 5}),
+              },
+              {
+                'label': 'Volumen (Der)',
+                'color': '#FFC107',
+                'axisDependency': 'right',
+                'entries': List.generate(10, (i) => {'x': i, 'y': v - i * 1000}),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '3. Tiempo Real (Streaming)',
+      description: 'Línea en tiempo real con scroll',
+      icon: Icons.stream,
+      isAdvanced: true,
+      dataSource: 'Simulado',
+      buildConfig: (cryptos) {
+        return ChartConfig(
+          chartType: 'line',
+          animateX: 500,
+          data: {
+            'datasets': [
+              {
+                'label': 'Live Data',
+                'color': '#E91E63',
+                'entries': List.generate(20, (i) => {'x': i, 'y': 50 + sin(i.toDouble()) * 10}),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '4. Dataset Grande (Zoom/Pan)',
+      description: 'Más de 5,000 puntos',
+      icon: Icons.zoom_in,
+      isAdvanced: true,
+      dataSource: 'Simulado',
+      buildConfig: (cryptos) {
+        return ChartConfig(
+          chartType: 'scatter',
+          animateX: 0,
+          data: {
+            'datasets': [
+              {
+                'label': 'Puntos Históricos',
+                'color': '#9C27B0',
+                'entries': List.generate(5000, (i) => {'x': i, 'y': 100 + (sin(i*0.1) * 20) + (Random().nextDouble() * 10)}),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '5. MarkerView Personalizado',
+      description: 'Tooltip nativo con info',
+      icon: Icons.info_outline,
+      isAdvanced: true,
+      dataSource: 'Real',
+      buildConfig: (cryptos) {
+        final take = cryptos.take(5).toList();
+        return ChartConfig(
+          chartType: 'bar',
+          animateY: 1000,
+          data: {
+            'datasets': [
+              {
+                'label': 'Market Cap',
+                'color': '#00BCD4',
+                'entries': take.asMap().entries.map((e) => {'x': e.key, 'y': e.value.marketCapUsd}).toList(),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '6. Pirámide (Barras apiladas H)',
+      description: 'Gainers vs Losers H',
+      icon: Icons.align_horizontal_center,
+      isAdvanced: true,
+      dataSource: 'Real',
+      buildConfig: (cryptos) {
+        return ChartConfig(
+          chartType: 'horizontal_bar',
+          animateY: 1000,
+          data: {
+            'datasets': [
+              {
+                'label': 'Positivo / Negativo',
+                'colors': ['#4CAF50', '#F44336'],
+                'entries': [
+                  {'x': 0, 'yVals': [-5.0, 10.0]},
+                  {'x': 1, 'yVals': [-2.0, 8.0]},
+                  {'x': 2, 'yVals': [-8.0, 3.0]},
+                ]
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '7. Radar Comparativo',
+      description: 'BTC vs ETH Múltiples variables',
+      icon: Icons.radar,
+      isAdvanced: true,
+      dataSource: 'Real',
+      buildConfig: (cryptos) {
+        final btc = cryptos.isNotEmpty ? cryptos.first : null;
+        final eth = cryptos.length > 1 ? cryptos[1] : null;
+        return ChartConfig(
+          chartType: 'radar',
+          animateX: 1000, animateY: 1000,
+          data: {
+            'datasets': [
+              if (btc != null)
+              {
+                'label': btc.symbol,
+                'color': '#FF9800',
+                'entries': [{'value': btc.percentChange1h.abs()}, {'value': btc.percentChange24h.abs()}, {'value': btc.percentChange7d.abs()}]
+              },
+              if (eth != null)
+              {
+                'label': eth.symbol,
+                'color': '#9E9E9E',
+                'entries': [{'value': eth.percentChange1h.abs()}, {'value': eth.percentChange24h.abs()}, {'value': eth.percentChange7d.abs()}]
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '8. Gradiente Relleno (Gradient)',
+      description: 'Curva suavizada con gradiente',
+      icon: Icons.gradient,
+      isAdvanced: true,
+      dataSource: 'Simulado',
+      buildConfig: (cryptos) {
+        return ChartConfig(
+          chartType: 'line',
+          animateX: 1000,
+          data: {
+            'datasets': [
+              {
+                'label': 'Tendencia',
+                'color': '#3F51B5',
+                'isFilled': true,
+                'mode': 'cubic',
+                'entries': List.generate(20, (i) => {'x': i, 'y': 20 + cos(i.toDouble()) * 10}),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '9. Candlestick + Volumen',
+      description: 'Velas y barras de volumen',
+      icon: Icons.candlestick_chart,
+      isAdvanced: true,
+      dataSource: 'Simulado',
+      buildConfig: (cryptos) {
+        return ChartConfig(
+          chartType: 'candlestick',
+          animateX: 1000,
+          data: {
+            'datasets': [
+              {
+                'label': 'OHLC',
+                'color': '#8BC34A',
+                'entries': List.generate(10, (i) => {
+                  'x': i, 'high': 100+i*2, 'low': 90+i*2, 'open': 95+i*2, 'close': 98+i*2
+                }),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '10. Gráfico Interactivo',
+      description: 'Tocar para actualizar UI Flutter',
+      icon: Icons.touch_app,
+      isAdvanced: true,
+      dataSource: 'Real',
+      buildConfig: (cryptos) {
+        final take = cryptos.take(5).toList();
+        return ChartConfig(
+          chartType: 'pie',
+          animateY: 500,
+          drawHole: true,
+          data: {
+            'datasets': [
+              {
+                'label': 'Tap me',
+                'colors': ['#FF5722', '#CDDC39', '#009688', '#795548', '#607D8B'],
+                'entries': take.map((e) => {'label': e.symbol, 'value': e.priceUsd}).toList(),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '11. Transiciones Animadas',
+      description: 'Cambio dinámico de estado',
+      icon: Icons.animation,
+      isAdvanced: true,
+      dataSource: 'Real',
+      buildConfig: (cryptos) {
+        final take = cryptos.take(4).toList();
+        return ChartConfig(
+          chartType: 'bubble',
+          animateX: 1000, animateY: 1000,
+          data: {
+            'datasets': [
+              {
+                'label': 'Burbujas animadas',
+                'color': '#03A9F4',
+                'entries': take.map((e) => {'x': e.rank, 'y': e.percentChange24h, 'size': e.priceUsd/100}).toList(),
+              }
+            ]
+          }
+        );
+      },
+    ),
+    ChartItem(
+      title: '12. Gráficos Sincronizados',
+      description: 'Zoom y pan sincronizado en X',
+      icon: Icons.sync,
+      isAdvanced: true,
+      dataSource: 'Simulado',
+      buildConfig: (cryptos) {
+        return ChartConfig(
+          chartType: 'line',
+          animateX: 1000,
+          data: {
+            'datasets': [
+              {
+                'label': 'Gráfico Superior Sync',
+                'color': '#673AB7',
+                'entries': List.generate(50, (i) => {'x': i, 'y': sin(i*0.2)*50}),
+              }
+            ]
+          }
+        );
+      },
+    ),
   ];
 }
