@@ -22,6 +22,7 @@ class AppRangeBarChart extends StatelessWidget {
         majorGridLines: const MajorGridLines(width: 0),
       ),
       primaryYAxis: NumericAxis(
+        labelFormat: '{value}%',
         labelStyle: TextStyle(color: tokens.axisLabelColor, fontSize: 10),
         axisLine: AxisLine(color: tokens.axisLineColor),
         majorTickLines: const MajorTickLines(size: 0),
@@ -30,9 +31,9 @@ class AppRangeBarChart extends StatelessWidget {
       series: <CartesianSeries<Map<String, dynamic>, String>>[
         RangeColumnSeries<Map<String, dynamic>, String>(
           dataSource: data,
-          xValueMapper: (d, _) => d['crypto'] as String,
-          lowValueMapper: (d, _) => (d['min'] as num).toDouble(),
-          highValueMapper: (d, _) => (d['max'] as num).toDouble(),
+          xValueMapper: (d, _) => (d['crypto'] ?? d['asset'] ?? d['x'] ?? '') as String,
+          lowValueMapper: (d, _) => ((d['min'] ?? d['low'] ?? 0) as num).toDouble(),
+          highValueMapper: (d, _) => ((d['max'] ?? d['high'] ?? 0) as num).toDouble(),
           color: tokens.primaryColor.withValues(alpha: 0.7),
           borderColor: tokens.primaryColor,
           borderWidth: 1.5,

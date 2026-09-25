@@ -11,7 +11,7 @@ class AppSmoothAreaChart extends StatelessWidget {
   const AppSmoothAreaChart({
     super.key,
     required this.data,
-    required this.isBullish,
+    this.isBullish = true,
   });
 
   @override

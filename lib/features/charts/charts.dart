@@ -56,3 +56,6 @@ export 'presentation/widgets/advanced/multidimensional/app_scatter_matrix_chart.
 // Advanced - Financial (30 - 31)
 export 'presentation/widgets/advanced/financial/app_band_area_chart.dart';
 export 'presentation/widgets/advanced/financial/app_candlestick_chart.dart';
+
+// Graphic 2.7.0 Charts (32 charts)
+export 'presentation/widgets/graphic/graphic_charts.dart';

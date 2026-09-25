@@ -11,7 +11,7 @@ class AppNormalizedBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = ChartThemeTokens.of(context);
-    final segments = data.map((d) => d['segment'] as String).toSet().toList();
+    final segments = data.map((d) => (d['segment'] ?? d['group'] ?? d['type'] ?? '') as String).toSet().toList();
     final colors = [tokens.bullishColor, tokens.bearishColor, tokens.primaryColor, tokens.accentColor];
 
     return SfCartesianChart(
@@ -39,12 +39,12 @@ class AppNormalizedBarChart extends StatelessWidget {
       series: segments.asMap().entries.map((entry) {
         final idx = entry.key;
         final segment = entry.value;
-        final segData = data.where((d) => d['segment'] == segment).toList();
+        final segData = data.where((d) => (d['segment'] ?? d['group'] ?? d['type'] ?? '') == segment).toList();
         return StackedColumn100Series<Map<String, dynamic>, String>(
           name: segment,
           dataSource: segData,
-          xValueMapper: (d, _) => d['category'] as String,
-          yValueMapper: (d, _) => (d['percent'] as num).toDouble(),
+          xValueMapper: (d, _) => (d['category'] ?? d['x'] ?? '') as String,
+          yValueMapper: (d, _) => ((d['percent'] ?? d['value'] ?? d['y'] ?? 0) as num).toDouble(),
           color: colors[idx % colors.length],
         );
       }).toList(),
