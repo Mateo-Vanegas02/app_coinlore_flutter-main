@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart' hide ChartPoint;
+import '../../../../domain/models/chart_point.dart';
+import '../../../theme/chart_theme_tokens.dart';
+
+/// 4. Gráfico de Área con Gradiente
+class AppGradientAreaChart extends StatelessWidget {
+  final List<ChartPoint> data;
+  final bool isBullish;
+
+  const AppGradientAreaChart({
+    super.key,
+    required this.data,
+    this.isBullish = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = ChartThemeTokens.of(context);
+    final lineColor = isBullish ? tokens.bullishColor : tokens.bearishColor;
+
+    return SfCartesianChart(
+      backgroundColor: Colors.transparent,
+      plotAreaBorderWidth: 0,
+      primaryXAxis: CategoryAxis(
+        labelStyle: TextStyle(color: tokens.axisLabelColor, fontSize: 11),
+        axisLine: AxisLine(color: tokens.axisLineColor),
+        majorTickLines: const MajorTickLines(size: 0),
+        majorGridLines: MajorGridLines(color: tokens.gridLineColor),
+      ),
+      primaryYAxis: NumericAxis(
+        labelStyle: TextStyle(color: tokens.axisLabelColor, fontSize: 11),
+        axisLine: AxisLine(color: tokens.axisLineColor),
+        majorTickLines: const MajorTickLines(size: 0),
+        majorGridLines: MajorGridLines(color: tokens.gridLineColor),
+      ),
+      series: <CartesianSeries<ChartPoint, String>>[
+        SplineAreaSeries<ChartPoint, String>(
+          dataSource: data,
+          xValueMapper: (p, _) => p.x.toString(),
+          yValueMapper: (p, _) => p.y.toDouble(),
+          borderColor: lineColor,
+          borderWidth: 2.5,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              lineColor.withValues(alpha: 0.6),
+              lineColor.withValues(alpha: 0.05),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
