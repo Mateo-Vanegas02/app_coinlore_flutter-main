@@ -8,6 +8,7 @@ import '../../domain/entities/crypto_detail_entity.dart';
 import '../providers/crypto_detail_provider.dart' show loadDetailProvider;
 import '../widgets/detail_info_card.dart';
 import '../widgets/detail_social_links.dart';
+import '../../../charts/charts.dart';
 
 class CryptoDetailScreen extends ConsumerStatefulWidget {
   final CryptoEntity crypto;
@@ -85,6 +86,9 @@ class _CryptoDetailScreenState extends ConsumerState<CryptoDetailScreen> {
           ),
         ),
         data: (detail) {
+          final trendPoints = CryptoChartMapper.generateTrendPoints(detail);
+          final isBullish = detail.change7d >= 0;
+
           if (isTabletOrDesktop) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(24),
@@ -102,7 +106,27 @@ class _CryptoDetailScreenState extends ConsumerState<CryptoDetailScreen> {
                     ),
                   ),
                   const SizedBox(width: 24),
-                  Expanded(flex: 3, child: DetailInfoCard(detail: detail)),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      children: [
+                        AppChartCard(
+                          title: 'Evolución de Precio (7 Días)',
+                          subtitle: 'Tendencia basada en variación de cotización',
+                          badgeText:
+                              '${isBullish ? '+' : ''}${detail.change7d.toStringAsFixed(2)}%',
+                          isPositiveBadge: isBullish,
+                          height: 240,
+                          chart: AppSmoothAreaChart(
+                            data: trendPoints,
+                            isBullish: isBullish,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        DetailInfoCard(detail: detail),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             );
@@ -114,6 +138,21 @@ class _CryptoDetailScreenState extends ConsumerState<CryptoDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildHeader(detail, isDark),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: AppChartCard(
+                    title: 'Evolución de Precio (7 Días)',
+                    subtitle: 'Tendencia basada en variación de cotización',
+                    badgeText:
+                        '${isBullish ? '+' : ''}${detail.change7d.toStringAsFixed(2)}%',
+                    isPositiveBadge: isBullish,
+                    height: 210,
+                    chart: AppSmoothAreaChart(
+                      data: trendPoints,
+                      isBullish: isBullish,
+                    ),
+                  ),
+                ),
                 DetailInfoCard(detail: detail),
                 DetailSocialLinks(detail: detail),
               ],

@@ -9,10 +9,14 @@ class CryptoRepositoryImpl implements CryptoRepository {
       : _remoteDatasource = remoteDatasource;
 
   @override
-  Future<List<CryptoEntity>> getCryptos({int start = 0, int limit = 20}) =>
-      _remoteDatasource.getCryptos(start: start, limit: limit);
+  Future<List<CryptoEntity>> getCryptos({int start = 0, int limit = 20}) async {
+    final list = await _remoteDatasource.getCryptos(start: start, limit: limit);
+    return List<CryptoEntity>.from(list);
+  }
 
   @override
-  Future<List<CryptoEntity>> getAllCryptos() =>
-      _remoteDatasource.getAllCryptos();
+  Future<List<CryptoEntity>> getAllCryptos() async {
+    final list = await _remoteDatasource.getAllCryptos();
+    return List<CryptoEntity>.from(list);
+  }
 }

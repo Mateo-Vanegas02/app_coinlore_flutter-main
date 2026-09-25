@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'features/crypto_list/presentation/screens/crypto_list_screen.dart';
+import 'features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'features/settings/presentation/providers/settings_provider.dart';
 
 void main() {
@@ -22,8 +22,13 @@ class MyApp extends ConsumerWidget {
         useMaterial3: true,
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(elevation: 0, centerTitle: true),
+        scaffoldBackgroundColor: const Color(0xFFF8FAFC),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          centerTitle: false,
+          backgroundColor: Colors.white,
+          foregroundColor: Color(0xFF0F172A),
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
@@ -39,7 +44,7 @@ class MyApp extends ConsumerWidget {
         ),
       ),
       themeMode: themeMode,
-      home: const CryptoListScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
