@@ -346,7 +346,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #1',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[0]),
+        chart: MpChartView(config: ChartCatalog.allCharts[0].buildConfig([])),
       ));
     }
     return items;
@@ -390,7 +390,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #2',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[1]),
+        chart: MpChartView(config: ChartCatalog.allCharts[1].buildConfig([])),
       ));
     }
     return items;
@@ -433,7 +433,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #3',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[2]),
+        chart: MpChartView(config: ChartCatalog.allCharts[2].buildConfig([])),
       ));
     }
     return items;
@@ -476,7 +476,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #4',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[3]),
+        chart: MpChartView(config: ChartCatalog.allCharts[3].buildConfig([])),
       ));
     }
     return items;
@@ -525,7 +525,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #5',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[4]),
+        chart: MpChartView(config: ChartCatalog.allCharts[4].buildConfig([])),
       ));
     }
     return items;
@@ -571,7 +571,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #6',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[5]),
+        chart: MpChartView(config: ChartCatalog.allCharts[5].buildConfig([])),
       ));
     }
     return items;
@@ -613,7 +613,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #7',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[6]),
+        chart: MpChartView(config: ChartCatalog.allCharts[6].buildConfig([])),
       ));
     }
     return items;
@@ -655,7 +655,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #8',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[7]),
+        chart: MpChartView(config: ChartCatalog.allCharts[7].buildConfig([])),
       ));
     }
     return items;
@@ -698,7 +698,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #9',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[8]),
+        chart: MpChartView(config: ChartCatalog.allCharts[8].buildConfig([])),
       ));
     }
     return items;
@@ -741,7 +741,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #10',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[9]),
+        chart: MpChartView(config: ChartCatalog.allCharts[9].buildConfig([])),
       ));
     }
     return items;
@@ -782,7 +782,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #11',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[10]),
+        chart: MpChartView(config: ChartCatalog.allCharts[10].buildConfig([])),
       ));
     }
     return items;
@@ -824,7 +824,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #12',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[11]),
+        chart: MpChartView(config: ChartCatalog.allCharts[11].buildConfig([])),
       ));
     }
     return items;
@@ -866,7 +866,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #13',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[12]),
+        chart: MpChartView(config: ChartCatalog.allCharts[12].buildConfig([])),
       ));
     }
     return items;
@@ -908,7 +908,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #14',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[13]),
+        chart: MpChartView(config: ChartCatalog.allCharts[13].buildConfig([])),
       ));
     }
     return items;
@@ -943,7 +943,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #15',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[14]),
+        chart: MpChartView(config: ChartCatalog.allCharts[14].buildConfig([])),
       ));
     }
     return items;
@@ -985,7 +985,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #16',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[15]),
+        chart: MpChartView(config: ChartCatalog.allCharts[15].buildConfig([])),
       ));
     }
     return items;
@@ -1026,7 +1026,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #17',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[16]),
+        chart: MpChartView(config: ChartCatalog.allCharts[16].buildConfig([])),
       ));
     }
     return items;
@@ -1067,7 +1067,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #18',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[17]),
+        chart: MpChartView(config: ChartCatalog.allCharts[17].buildConfig([])),
       ));
     }
     return items;
@@ -1108,7 +1108,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #19',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[18]),
+        chart: MpChartView(config: ChartCatalog.allCharts[18].buildConfig([])),
       ));
     }
     return items;
@@ -1150,7 +1150,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #20',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[19]),
+        chart: MpChartView(config: ChartCatalog.allCharts[19].buildConfig([])),
       ));
     }
     return items;
@@ -1196,7 +1196,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #21',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[20]),
+        chart: MpChartView(config: ChartCatalog.allCharts[20].buildConfig([])),
       ));
     }
     return items;
@@ -1236,7 +1236,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #22',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[21]),
+        chart: MpChartView(config: ChartCatalog.allCharts[21].buildConfig([])),
       ));
     }
     return items;
@@ -1278,7 +1278,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #23',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[22]),
+        chart: MpChartView(config: ChartCatalog.allCharts[22].buildConfig([])),
       ));
     }
     return items;
@@ -1322,7 +1322,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #24',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[23]),
+        chart: MpChartView(config: ChartCatalog.allCharts[23].buildConfig([])),
       ));
     }
     return items;
@@ -1365,7 +1365,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #25',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[24]),
+        chart: MpChartView(config: ChartCatalog.allCharts[24].buildConfig([])),
       ));
     }
     return items;
@@ -1406,7 +1406,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #26',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[25]),
+        chart: MpChartView(config: ChartCatalog.allCharts[25].buildConfig([])),
       ));
     }
     return items;
@@ -1447,7 +1447,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #27',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[26]),
+        chart: MpChartView(config: ChartCatalog.allCharts[26].buildConfig([])),
       ));
     }
     return items;
@@ -1496,7 +1496,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #28',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[27]),
+        chart: MpChartView(config: ChartCatalog.allCharts[27].buildConfig([])),
       ));
     }
     return items;
@@ -1542,7 +1542,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #29',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[28]),
+        chart: MpChartView(config: ChartCatalog.allCharts[28].buildConfig([])),
       ));
     }
     return items;
@@ -1584,7 +1584,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #30',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[29]),
+        chart: MpChartView(config: ChartCatalog.allCharts[29].buildConfig([])),
       ));
     }
     return items;
@@ -1628,7 +1628,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #31',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[30]),
+        chart: MpChartView(config: ChartCatalog.allCharts[30].buildConfig([])),
       ));
     }
     return items;
@@ -1689,7 +1689,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #32',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.getAllCharts()[31]),
+        chart: MpChartView(config: ChartCatalog.allCharts[31].buildConfig([])),
       ));
     }
     return items;

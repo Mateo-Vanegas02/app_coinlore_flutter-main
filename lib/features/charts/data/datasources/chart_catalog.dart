@@ -24,6 +24,7 @@ class ChartItem {
 class ChartCatalog {
   static List<ChartItem> get basicCharts => _allCharts.where((c) => !c.isAdvanced).toList();
   static List<ChartItem> get advancedCharts => _allCharts.where((c) => c.isAdvanced).toList();
+  static List<ChartItem> get allCharts => _allCharts;
 
   static final List<ChartItem> _allCharts = [
     // BÁSICOS (20)
@@ -274,7 +275,9 @@ class ChartCatalog {
       dataSource: 'Real',
       buildConfig: (cryptos) {
         final list = cryptos.toList()..sort((a,b) => b.percentChange24h.compareTo(a.percentChange24h));
-        final take = [list.first, list.last];
+        final fallback = CryptoEntity(id: '1', rank: 1, symbol: 'MOCK', name: 'Mock', nameid: 'mock', priceUsd: 1000, percentChange24h: 5.0, percentChange1h: 0, percentChange7d: 0, marketCapUsd: 1000000, volume24: 50000);
+        final fallback2 = CryptoEntity(id: '2', rank: 2, symbol: 'MCK2', name: 'Mock2', nameid: 'mock2', priceUsd: 500, percentChange24h: -3.0, percentChange1h: 0, percentChange7d: 0, marketCapUsd: 500000, volume24: 25000);
+        final take = list.isNotEmpty ? [list.first, list.last] : [fallback, fallback2];
         return ChartConfig(
           chartType: 'bar',
           animateY: 800,
@@ -397,7 +400,8 @@ class ChartCatalog {
       isAdvanced: false,
       dataSource: 'Real',
       buildConfig: (cryptos) {
-        final c = cryptos.first;
+        final fallback = CryptoEntity(id: '1', rank: 1, symbol: 'BTC', name: 'Bitcoin', nameid: 'btc', priceUsd: 50000, percentChange24h: 5.0, percentChange1h: 0.5, percentChange7d: 12.0, marketCapUsd: 1000000000, volume24: 500000);
+        final c = cryptos.isNotEmpty ? cryptos.first : fallback;
         return ChartConfig(
           chartType: 'radar',
           animateX: 1000,
