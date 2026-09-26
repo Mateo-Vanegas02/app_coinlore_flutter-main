@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../settings/presentation/providers/settings_provider.dart';
 import '../../charts.dart';
+import 'charts_menu_screen.dart';
 
 /// Catálogo y Centro de Visualización de Gráficos (Analytics Hub).
 /// Muestra los 32 gráficos con Syncfusion y los 32 gráficos con Graphic (64 gráficos en total).
@@ -113,6 +114,17 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
                       visualDensity: VisualDensity.compact,
                     ),
                   ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(Icons.android_rounded, color: Color(0xFF3DDC84)),
+                  tooltip: 'MPAndroidChart (Nativo)',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ChartsMenuScreen()),
+                    );
+                  },
                 ),
               ],
             ),

@@ -8,6 +8,6 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         flutterEngine.platformViewsController
             .registry
-            .registerViewFactory("mp_chart_view", MpChartViewFactory(flutterEngine.dartExecutor.binaryMessenger))
+            .registerViewFactory("mpandroidchart_view", MpChartViewFactory(flutterEngine.dartExecutor.binaryMessenger))
     }
 }
