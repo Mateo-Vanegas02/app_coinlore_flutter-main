@@ -8,7 +8,6 @@ import '../../domain/entities/crypto_entity.dart';
 import '../widgets/crypto_mobile_tile.dart';
 import '../widgets/market_summary_banner.dart';
 import '../widgets/top_gainers_carousel.dart';
-import '../../../charts/presentation/screens/charts_menu_screen.dart';
 
 /// Pantalla móvil principal de Mercados de Criptomonedas.
 /// Diseñada con estética nativa móvil: tarjetas táctiles, carrusel de destacadas
@@ -69,15 +68,7 @@ class _CryptoListScreenState extends ConsumerState<CryptoListScreen> {
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ChartsMenuScreen()),
-              );
-            },
-            child: const Text('MPAndroidChart'),
-          ),
+
           IconButton(
             icon: const Icon(Icons.search_rounded),
             onPressed: () => _openSearch(context),
