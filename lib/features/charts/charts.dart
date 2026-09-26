@@ -66,3 +66,13 @@ export 'presentation/widgets/advanced/multidimensional/app_band_area_chart.dart'
 // Financieros y de Flujo (2)
 export 'presentation/widgets/advanced/financial/app_candlestick_chart.dart';
 export 'presentation/widgets/advanced/financial/app_streamgraph_chart.dart';
+
+// ----------------------------------------------------------------------
+// COMMUNITY CHARTS (community_charts_flutter)
+// ----------------------------------------------------------------------
+export 'presentation/screens/community_charts_gallery_screen.dart';
+
+// ----------------------------------------------------------------------
+// COMMUNITY CHARTS (community_charts_flutter)
+// ----------------------------------------------------------------------
+export 'presentation/widgets/community/community_charts_barrel.dart';

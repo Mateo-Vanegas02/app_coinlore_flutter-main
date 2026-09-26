@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../settings/presentation/providers/settings_provider.dart';
-import '../../charts.dart';
+import '../../charts.dart'; // <-- barrel, para tener acceso a AppChartCard, ChartPoint, etc.
 
 /// Catálogo y Centro de Visualización de Gráficos (Analytics Hub).
 /// Muestra los 20 gráficos básicos y los 12 gráficos avanzados construidos
@@ -11,7 +11,8 @@ class ChartsGalleryScreen extends ConsumerStatefulWidget {
   const ChartsGalleryScreen({super.key});
 
   @override
-  ConsumerState<ChartsGalleryScreen> createState() => _ChartsGalleryScreenState();
+  ConsumerState<ChartsGalleryScreen> createState() =>
+      _ChartsGalleryScreenState();
 }
 
 class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
@@ -22,7 +23,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     '📈 Líneas & Áreas (6)',
     '📊 Barras & Columnas (6)',
     '🍩 Circulares & Radiales (5)',
-    '🎯 Puntos & Radar (3)',
+    '🎯 Puntos & Radar (2)',
     '🔬 Avanzados (12)',
   ];
 
@@ -32,7 +33,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     final tokens = ChartThemeTokens.fromBrightness(isDark: isDark);
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF121212) : const Color(0xFFF8FAFC),
+      backgroundColor:
+          isDark ? const Color(0xFF121212) : const Color(0xFFF8FAFC),
       appBar: AppBar(
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +51,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
+            icon: Icon(
+                isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
             onPressed: () {
               ref.read(settingsProvider.notifier).update(
                     (s) => s.copyWith(
@@ -93,7 +96,9 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
                     if (selected) setState(() => _selectedCategoryIndex = i);
                   },
                   selectedColor: tokens.primaryColor,
-                  backgroundColor: isDark ? const Color(0xFF2A2A2A) : const Color(0xFFF1F5F9),
+                  backgroundColor: isDark
+                      ? const Color(0xFF2A2A2A)
+                      : const Color(0xFFF1F5F9),
                   labelStyle: TextStyle(
                     fontSize: 12,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
@@ -104,7 +109,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                     side: BorderSide(
-                      color: isSelected ? tokens.primaryColor : Colors.transparent,
+                      color:
+                          isSelected ? tokens.primaryColor : Colors.transparent,
                     ),
                   ),
                   showCheckmark: false,
@@ -122,6 +128,18 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => const CommunityChartsGalleryScreen(),
+            ),
+          );
+        },
+        icon: const Icon(Icons.auto_graph),
+        label: const Text('Community'),
+        tooltip: 'Ver los 32 gráficos con community_charts_flutter',
+      ),
     );
   }
 
@@ -130,7 +148,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
 
     // 1. Líneas y Áreas (6)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 1) {
-      widgets.add(_buildSectionHeader('1. Líneas y Áreas (6)', 'Evolución continua y series temporales'));
+      widgets.add(_buildSectionHeader(
+          '1. Líneas y Áreas (6)', 'Evolución continua y series temporales'));
       widgets.add(_chart1StandardLine(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart2SmoothArea(tokens));
@@ -147,7 +166,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
 
     // 2. Barras y Columnas (6)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 2) {
-      widgets.add(_buildSectionHeader('2. Barras y Columnas (6)', 'Comparativas categóricas y acumulaciones'));
+      widgets.add(_buildSectionHeader('2. Barras y Columnas (6)',
+          'Comparativas categóricas y acumulaciones'));
       widgets.add(_chart7VerticalBar(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart8HorizontalBar(tokens));
@@ -164,7 +184,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
 
     // 3. Circulares y Radiales (5)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 3) {
-      widgets.add(_buildSectionHeader('3. Circulares y Radiales (5)', 'Proporciones, dominancia y ángulos polares'));
+      widgets.add(_buildSectionHeader('3. Circulares y Radiales (5)',
+          'Proporciones, dominancia y ángulos polares'));
       widgets.add(_chart13Pie(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart14Donut(tokens));
@@ -173,13 +194,12 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart16Rose(tokens));
       widgets.add(const SizedBox(height: 16));
-      widgets.add(_chart17RadialBar(tokens));
-      widgets.add(const SizedBox(height: 24));
     }
 
     // 4. Puntos y Radar (3)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 4) {
-      widgets.add(_buildSectionHeader('4. Puntos y Radar (3)', 'Dispersión multidimensional y perfiles polares'));
+      widgets.add(_buildSectionHeader('4. Puntos y Radar (3)',
+          'Dispersión multidimensional y perfiles polares'));
       widgets.add(_chart18Scatter(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart19Bubble(tokens));
@@ -190,7 +210,9 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
 
     // 5. Avanzados (12)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 5) {
-      widgets.add(_buildSectionHeader('5. Avanzados: Estadísticos y Densidad (4)', 'Distribuciones y probabilidad'));
+      widgets.add(_buildSectionHeader(
+          '5. Avanzados: Estadísticos y Densidad (4)',
+          'Distribuciones y probabilidad'));
       widgets.add(_chart21Heatmap(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart22BoxPlot(tokens));
@@ -200,7 +222,9 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       widgets.add(_chart24Violin(tokens));
       widgets.add(const SizedBox(height: 24));
 
-      widgets.add(_buildSectionHeader('6. Avanzados: Jerárquicos y Proporción (3)', 'Relaciones parte-todo y flujos'));
+      widgets.add(_buildSectionHeader(
+          '6. Avanzados: Jerárquicos y Proporción (3)',
+          'Relaciones parte-todo y flujos'));
       widgets.add(_chart25Treemap(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart26Sunburst(tokens));
@@ -208,7 +232,9 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       widgets.add(_chart27Funnel(tokens));
       widgets.add(const SizedBox(height: 24));
 
-      widgets.add(_buildSectionHeader('7. Avanzados: Multidimensionales y Continuos (3)', 'Correlaciones y bandas'));
+      widgets.add(_buildSectionHeader(
+          '7. Avanzados: Multidimensionales y Continuos (3)',
+          'Correlaciones y bandas'));
       widgets.add(_chart28Parallel(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart29ScatterMatrix(tokens));
@@ -216,7 +242,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       widgets.add(_chart30BandArea(tokens));
       widgets.add(const SizedBox(height: 24));
 
-      widgets.add(_buildSectionHeader('8. Avanzados: Financieros y Flujo (2)', 'Trading y evolución orgánica'));
+      widgets.add(_buildSectionHeader('8. Avanzados: Financieros y Flujo (2)',
+          'Trading y evolución orgánica'));
       widgets.add(_chart31Candlestick(tokens));
       widgets.add(const SizedBox(height: 16));
       widgets.add(_chart32Streamgraph(tokens));
@@ -234,10 +261,12 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, letterSpacing: -0.3),
+            style: const TextStyle(
+                fontSize: 17, fontWeight: FontWeight.bold, letterSpacing: -0.3),
           ),
           const SizedBox(height: 2),
-          Text(subtitle, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          Text(subtitle,
+              style: const TextStyle(fontSize: 12, color: Colors.grey)),
         ],
       ),
     );
@@ -356,7 +385,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '6. Baseline Area (Diferencia sobre Umbral)',
-      subtitle: 'Área condicional: verde sobre umbral (\$84.0k) y roja por debajo',
+      subtitle:
+          'Área condicional: verde sobre umbral (\$84.0k) y roja por debajo',
       badgeText: 'Umbral \$84k',
       isPositiveBadge: true,
       height: 200,
@@ -394,7 +424,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       subtitle: 'IntervalMark con RectCoord(transposed: true)',
       badgeText: 'Top Cap',
       height: 210,
-      chart: AppBarChart(data: rankData, isHorizontal: true, barColor: tokens.primaryColor),
+      chart: AppBarChart(
+          data: rankData, isHorizontal: true, barColor: tokens.primaryColor),
     );
   }
 
@@ -461,7 +492,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '12. Range / Floating Bar Chart',
-      subtitle: 'IntervalMark() suspendido: rango de variación % 24h por activo',
+      subtitle:
+          'IntervalMark() suspendido: rango de variación % 24h por activo',
       badgeText: 'Rangos %',
       height: 210,
       chart: AppRangeBarChart(data: rangeData),
@@ -521,26 +553,11 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '16. Nightingale Rose Chart',
-      subtitle: 'Pétalos con radio proporcional al score delimitado estrictamente',
+      subtitle:
+          'Pétalos con radio proporcional al score delimitado estrictamente',
       badgeText: 'Básico #16',
       height: 220,
       chart: AppRoseChart(data: roseData),
-    );
-  }
-
-  Widget _chart17RadialBar(ChartThemeTokens tokens) {
-    const radialData = [
-      {'name': 'BTC', 'value': 94.0},
-      {'name': 'ETH', 'value': 78.0},
-      {'name': 'SOL', 'value': 62.0},
-      {'name': 'BNB', 'value': 48.0},
-    ];
-    return const AppChartCard(
-      title: '17. Radial Bar Chart (Barras Circulares)',
-      subtitle: 'Arcos proporcionales concéntricos ajustados a la altura del card',
-      badgeText: 'Básico #17',
-      height: 210,
-      chart: AppRadialBarChart(data: radialData),
     );
   }
 
@@ -569,7 +586,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '19. Bubble Chart (Burbujas Financieras)',
-      subtitle: '3 Dimensiones: Market Cap (X) vs Retorno 24h (Y) vs Volumen (Radio)',
+      subtitle:
+          '3 Dimensiones: Market Cap (X) vs Retorno 24h (Y) vs Volumen (Radio)',
       badgeText: '3 Dimensiones',
       height: 210,
       chart: AppBubbleChart(data: bubbleData),
@@ -586,7 +604,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '20. Radar / Spider Chart (Perfil Polar)',
-      subtitle: 'Polígono multidimensional cerrado dentro de su caja de límites',
+      subtitle:
+          'Polígono multidimensional cerrado dentro de su caja de límites',
       badgeText: 'Perfil #20',
       height: 220,
       chart: AppRadarChart(data: radarData),
@@ -607,7 +626,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '21. Heatmap / Matriz de Calor',
-      subtitle: 'Matriz de retornos horarios por sesión con escala de color normalizada',
+      subtitle:
+          'Matriz de retornos horarios por sesión con escala de color normalizada',
       badgeText: 'Avanzado #21',
       height: 210,
       chart: AppHeatmapChart(data: heatmapData),
@@ -617,9 +637,30 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
   Widget _chart22BoxPlot(ChartThemeTokens tokens) {
     // Datos en variación % semanal para escala uniforme y visible
     const boxData = [
-      {'asset': 'BTC', 'min': -4.2, 'q1': -1.8, 'median': 0.5, 'q3': 2.1, 'max': 5.3},
-      {'asset': 'ETH', 'min': -6.1, 'q1': -2.4, 'median': 0.2, 'q3': 3.0, 'max': 7.8},
-      {'asset': 'SOL', 'min': -8.5, 'q1': -3.2, 'median': 1.1, 'q3': 4.5, 'max': 11.2},
+      {
+        'asset': 'BTC',
+        'min': -4.2,
+        'q1': -1.8,
+        'median': 0.5,
+        'q3': 2.1,
+        'max': 5.3
+      },
+      {
+        'asset': 'ETH',
+        'min': -6.1,
+        'q1': -2.4,
+        'median': 0.2,
+        'q3': 3.0,
+        'max': 7.8
+      },
+      {
+        'asset': 'SOL',
+        'min': -8.5,
+        'q1': -3.2,
+        'median': 1.1,
+        'q3': 4.5,
+        'max': 11.2
+      },
     ];
     return const AppChartCard(
       title: '22. BoxPlot (Caja y Bigotes)',
@@ -659,7 +700,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '24. Violin Plot (Densidad Simétrica)',
-      subtitle: 'Curvas Bezier simétricas para densidad probabilística de retorno',
+      subtitle:
+          'Curvas Bezier simétricas para densidad probabilística de retorno',
       badgeText: 'Probabilidad #24',
       height: 200,
       chart: AppViolinPlotChart(data: violinData),
@@ -668,16 +710,53 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
 
   Widget _chart25Treemap(ChartThemeTokens tokens) {
     const treeData = [
-      {'symbol': 'BTC', 'name': 'Bitcoin', 'value': 1680, 'change': 0.34, 'price': 84206.0},
-      {'symbol': 'ETH', 'name': 'Ethereum', 'value': 327, 'change': 0.10, 'price': 2677.0},
-      {'symbol': 'SOL', 'name': 'Solana', 'value': 63, 'change': 1.75, 'price': 116.6},
-      {'symbol': 'USDT', 'name': 'Tether', 'value': 183, 'change': -0.07, 'price': 1.0},
-      {'symbol': 'BNB', 'name': 'Binance', 'value': 107, 'change': 0.69, 'price': 773.2},
-      {'symbol': 'XRP', 'name': 'Ripple', 'value': 91, 'change': 2.42, 'price': 1.53},
+      {
+        'symbol': 'BTC',
+        'name': 'Bitcoin',
+        'value': 1680,
+        'change': 0.34,
+        'price': 84206.0
+      },
+      {
+        'symbol': 'ETH',
+        'name': 'Ethereum',
+        'value': 327,
+        'change': 0.10,
+        'price': 2677.0
+      },
+      {
+        'symbol': 'SOL',
+        'name': 'Solana',
+        'value': 63,
+        'change': 1.75,
+        'price': 116.6
+      },
+      {
+        'symbol': 'USDT',
+        'name': 'Tether',
+        'value': 183,
+        'change': -0.07,
+        'price': 1.0
+      },
+      {
+        'symbol': 'BNB',
+        'name': 'Binance',
+        'value': 107,
+        'change': 0.69,
+        'price': 773.2
+      },
+      {
+        'symbol': 'XRP',
+        'name': 'Ripple',
+        'value': 91,
+        'change': 2.42,
+        'price': 1.53
+      },
     ];
     return const AppChartCard(
       title: '25. Treemap / Mosaic Chart',
-      subtitle: 'Mosaico financiero proporcional al Market Cap y color por variación 24h',
+      subtitle:
+          'Mosaico financiero proporcional al Market Cap y color por variación 24h',
       badgeText: 'Mapa Mercado #25',
       height: 210,
       chart: AppTreemapChart(data: treeData),
@@ -693,7 +772,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     ];
     return const AppChartCard(
       title: '26. Sunburst Chart (Anillos Jerárquicos)',
-      subtitle: 'Anillos concéntricos proporcionales estrictamente delimitados a la caja',
+      subtitle:
+          'Anillos concéntricos proporcionales estrictamente delimitados a la caja',
       badgeText: 'Jerárquico #26',
       height: 210,
       chart: AppSunburstChart(data: sunData),
@@ -780,11 +860,41 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
 
   Widget _chart31Candlestick(ChartThemeTokens tokens) {
     const ohlcData = [
-      {'date': '09:00', 'open': 83800, 'close': 84200, 'high': 84500, 'low': 83600},
-      {'date': '10:00', 'open': 84200, 'close': 84000, 'high': 84350, 'low': 83900},
-      {'date': '11:00', 'open': 84000, 'close': 84450, 'high': 84600, 'low': 83950},
-      {'date': '12:00', 'open': 84450, 'close': 84150, 'high': 84500, 'low': 84050},
-      {'date': '13:00', 'open': 84150, 'close': 84650, 'high': 84800, 'low': 84100},
+      {
+        'date': '09:00',
+        'open': 83800,
+        'close': 84200,
+        'high': 84500,
+        'low': 83600
+      },
+      {
+        'date': '10:00',
+        'open': 84200,
+        'close': 84000,
+        'high': 84350,
+        'low': 83900
+      },
+      {
+        'date': '11:00',
+        'open': 84000,
+        'close': 84450,
+        'high': 84600,
+        'low': 83950
+      },
+      {
+        'date': '12:00',
+        'open': 84450,
+        'close': 84150,
+        'high': 84500,
+        'low': 84050
+      },
+      {
+        'date': '13:00',
+        'open': 84150,
+        'close': 84650,
+        'high': 84800,
+        'low': 84100
+      },
     ];
     return const AppChartCard(
       title: '31. Candlestick / OHLC Chart (Velas Japonesas)',
