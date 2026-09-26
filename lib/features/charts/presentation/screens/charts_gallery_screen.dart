@@ -7,6 +7,7 @@ import 'charts_menu_screen.dart';
 import '../../data/datasources/chart_catalog.dart';
 import '../widgets/mp_chart_view.dart';
 import '../widgets/base/app_chart_card.dart';
+import '../../../crypto_list/domain/entities/crypto_entity.dart';
 
 /// Catálogo y Centro de Visualización de Gráficos (Analytics Hub).
 /// Muestra los 32 gráficos con Syncfusion y los 32 gráficos con Graphic (64 gráficos en total).
@@ -21,6 +22,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
   // 0: Todos (96), 1: Syncfusion (32), 2: Graphic (32), 3: MPAndroid (32)
   int _selectedEngineIndex = 0;
   int _selectedCategoryIndex = 0;
+
+  final List<CryptoEntity> _mockCryptos = [
+    CryptoEntity(id: '1', rank: 1, symbol: 'BTC', name: 'Bitcoin', nameid: 'btc', priceUsd: 65000, percentChange24h: 5.0, percentChange1h: 0.5, percentChange7d: 12.0, marketCapUsd: 1200000000, volume24: 500000),
+    CryptoEntity(id: '2', rank: 2, symbol: 'ETH', name: 'Ethereum', nameid: 'eth', priceUsd: 3500, percentChange24h: -2.0, percentChange1h: -0.5, percentChange7d: 5.0, marketCapUsd: 400000000, volume24: 200000),
+    CryptoEntity(id: '3', rank: 3, symbol: 'SOL', name: 'Solana', nameid: 'sol', priceUsd: 150, percentChange24h: 10.0, percentChange1h: 1.5, percentChange7d: 25.0, marketCapUsd: 60000000, volume24: 50000),
+    CryptoEntity(id: '4', rank: 4, symbol: 'ADA', name: 'Cardano', nameid: 'ada', priceUsd: 0.5, percentChange24h: 1.0, percentChange1h: 0.1, percentChange7d: -2.0, marketCapUsd: 15000000, volume24: 10000),
+    CryptoEntity(id: '5', rank: 5, symbol: 'DOGE', name: 'Dogecoin', nameid: 'doge', priceUsd: 0.15, percentChange24h: -5.0, percentChange1h: -1.0, percentChange7d: -10.0, marketCapUsd: 20000000, volume24: 15000),
+  ];
 
   final List<String> _categories = [
     'Todos',
@@ -346,7 +355,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #1',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[0].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[0].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -390,7 +399,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #2',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[1].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[1].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -433,7 +442,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #3',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[2].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[2].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -476,7 +485,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #4',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[3].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[3].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -525,7 +534,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #5',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[4].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[4].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -571,7 +580,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #6',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[5].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[5].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -613,7 +622,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #7',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[6].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[6].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -655,7 +664,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #8',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[7].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[7].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -698,7 +707,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #9',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[8].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[8].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -741,7 +750,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #10',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[9].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[9].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -782,7 +791,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #11',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[10].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[10].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -824,7 +833,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #12',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[11].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[11].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -866,7 +875,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #13',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[12].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[12].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -908,7 +917,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #14',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[13].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[13].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -943,7 +952,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #15',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[14].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[14].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -985,7 +994,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #16',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[15].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[15].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1026,7 +1035,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #17',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[16].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[16].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1067,7 +1076,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #18',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[17].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[17].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1108,7 +1117,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #19',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[18].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[18].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1150,7 +1159,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #20',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[19].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[19].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1196,7 +1205,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #21',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[20].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[20].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1236,7 +1245,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #22',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[21].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[21].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1278,7 +1287,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #23',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[22].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[22].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1322,7 +1331,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #24',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[23].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[23].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1365,7 +1374,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #25',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[24].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[24].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1406,7 +1415,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #26',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[25].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[25].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1447,7 +1456,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #27',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[26].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[26].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1496,7 +1505,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #28',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[27].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[27].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1542,7 +1551,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #29',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[28].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[28].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1584,7 +1593,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #30',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[29].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[29].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1628,7 +1637,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #31',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[30].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[30].buildConfig(_mockCryptos)),
       ));
     }
     return items;
@@ -1689,7 +1698,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #32',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[31].buildConfig([])),
+        chart: MpChartView(config: ChartCatalog.allCharts[31].buildConfig(_mockCryptos)),
       ));
     }
     return items;
