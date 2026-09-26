@@ -8,7 +8,7 @@ import '../../domain/entities/crypto_entity.dart';
 import '../widgets/crypto_mobile_tile.dart';
 import '../widgets/market_summary_banner.dart';
 import '../widgets/top_gainers_carousel.dart';
-import '../../charts/presentation/screens/charts_menu_screen.dart';
+import '../../../charts/presentation/screens/charts_menu_screen.dart';
 
 /// Pantalla móvil principal de Mercados de Criptomonedas.
 /// Diseñada con estética nativa móvil: tarjetas táctiles, carrusel de destacadas
