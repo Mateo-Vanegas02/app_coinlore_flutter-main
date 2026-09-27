@@ -3,11 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../settings/presentation/providers/settings_provider.dart';
 import '../../charts.dart';
-import 'charts_menu_screen.dart';
 import '../../data/datasources/chart_catalog.dart';
 import '../widgets/mp_chart_view.dart';
-import '../widgets/base/app_chart_card.dart';
 import '../../../crypto_list/domain/entities/crypto_entity.dart';
+import '../widgets/community/community_charts.dart';
 
 /// Catálogo y Centro de Visualización de Gráficos (Analytics Hub).
 /// Muestra los 32 gráficos con Syncfusion y los 32 gráficos con Graphic (64 gráficos en total).
@@ -15,7 +14,8 @@ class ChartsGalleryScreen extends ConsumerStatefulWidget {
   const ChartsGalleryScreen({super.key});
 
   @override
-  ConsumerState<ChartsGalleryScreen> createState() => _ChartsGalleryScreenState();
+  ConsumerState<ChartsGalleryScreen> createState() =>
+      _ChartsGalleryScreenState();
 }
 
 class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
@@ -24,11 +24,66 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
   int _selectedCategoryIndex = 0;
 
   final List<CryptoEntity> _mockCryptos = [
-    CryptoEntity(id: '1', rank: 1, symbol: 'BTC', name: 'Bitcoin', nameid: 'btc', priceUsd: 65000, percentChange24h: 5.0, percentChange1h: 0.5, percentChange7d: 12.0, marketCapUsd: 1200000000, volume24: 500000),
-    CryptoEntity(id: '2', rank: 2, symbol: 'ETH', name: 'Ethereum', nameid: 'eth', priceUsd: 3500, percentChange24h: -2.0, percentChange1h: -0.5, percentChange7d: 5.0, marketCapUsd: 400000000, volume24: 200000),
-    CryptoEntity(id: '3', rank: 3, symbol: 'SOL', name: 'Solana', nameid: 'sol', priceUsd: 150, percentChange24h: 10.0, percentChange1h: 1.5, percentChange7d: 25.0, marketCapUsd: 60000000, volume24: 50000),
-    CryptoEntity(id: '4', rank: 4, symbol: 'ADA', name: 'Cardano', nameid: 'ada', priceUsd: 0.5, percentChange24h: 1.0, percentChange1h: 0.1, percentChange7d: -2.0, marketCapUsd: 15000000, volume24: 10000),
-    CryptoEntity(id: '5', rank: 5, symbol: 'DOGE', name: 'Dogecoin', nameid: 'doge', priceUsd: 0.15, percentChange24h: -5.0, percentChange1h: -1.0, percentChange7d: -10.0, marketCapUsd: 20000000, volume24: 15000),
+    CryptoEntity(
+        id: '1',
+        rank: 1,
+        symbol: 'BTC',
+        name: 'Bitcoin',
+        nameid: 'btc',
+        priceUsd: 65000,
+        percentChange24h: 5.0,
+        percentChange1h: 0.5,
+        percentChange7d: 12.0,
+        marketCapUsd: 1200000000,
+        volume24: 500000),
+    CryptoEntity(
+        id: '2',
+        rank: 2,
+        symbol: 'ETH',
+        name: 'Ethereum',
+        nameid: 'eth',
+        priceUsd: 3500,
+        percentChange24h: -2.0,
+        percentChange1h: -0.5,
+        percentChange7d: 5.0,
+        marketCapUsd: 400000000,
+        volume24: 200000),
+    CryptoEntity(
+        id: '3',
+        rank: 3,
+        symbol: 'SOL',
+        name: 'Solana',
+        nameid: 'sol',
+        priceUsd: 150,
+        percentChange24h: 10.0,
+        percentChange1h: 1.5,
+        percentChange7d: 25.0,
+        marketCapUsd: 60000000,
+        volume24: 50000),
+    CryptoEntity(
+        id: '4',
+        rank: 4,
+        symbol: 'ADA',
+        name: 'Cardano',
+        nameid: 'ada',
+        priceUsd: 0.5,
+        percentChange24h: 1.0,
+        percentChange1h: 0.1,
+        percentChange7d: -2.0,
+        marketCapUsd: 15000000,
+        volume24: 10000),
+    CryptoEntity(
+        id: '5',
+        rank: 5,
+        symbol: 'DOGE',
+        name: 'Dogecoin',
+        nameid: 'doge',
+        priceUsd: 0.15,
+        percentChange24h: -5.0,
+        percentChange1h: -1.0,
+        percentChange7d: -10.0,
+        marketCapUsd: 20000000,
+        volume24: 15000),
   ];
 
   final List<String> _categories = [
@@ -48,18 +103,24 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     final showSf = _selectedEngineIndex == 0 || _selectedEngineIndex == 1;
     final showGr = _selectedEngineIndex == 0 || _selectedEngineIndex == 2;
     final showMp = _selectedEngineIndex == 0 || _selectedEngineIndex == 3;
+    final showCo = _selectedEngineIndex == 0 || _selectedEngineIndex == 4;
 
     String subtitleText;
     if (_selectedEngineIndex == 0) {
-      subtitleText = 'Catálogo Completo • 96 Gráficos';
+      subtitleText = 'Catálogo Completo • 128 Gráficos';
     } else if (_selectedEngineIndex == 1) {
-      subtitleText = 'Catálogo Syncfusion Charts • 32 Gráficos Nativos';
+      subtitleText = 'Catálogo Syncfusion Charts • 32 Gráficos';
+    } else if (_selectedEngineIndex == 2) {
+      subtitleText = 'Catálogo Graphic 2.7.0 • 32 Gráficos';
+    } else if (_selectedEngineIndex == 3) {
+      subtitleText = 'Catálogo MPAndroidChart • 32 Gráficos';
     } else {
-      subtitleText = 'Catálogo Graphic 2.7.0 • 32 Gráficos Gramaticales';
+      subtitleText = 'Catálogo community_charts_flutter • 32 Gráficos';
     }
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF121212) : const Color(0xFFF8FAFC),
+      backgroundColor:
+          isDark ? const Color(0xFF121212) : const Color(0xFFF8FAFC),
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,13 +131,15 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
             ),
             Text(
               subtitleText,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              style:
+                  const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
             ),
           ],
         ),
         actions: [
           IconButton(
-            icon: Icon(isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
+            icon: Icon(
+                isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
             onPressed: () {
               ref.read(settingsProvider.notifier).update(
                     (s) => s.copyWith(
@@ -104,23 +167,38 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
                     segments: const [
                       ButtonSegment(
                         value: 0,
-                        label: Text('Todos', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                        label: Text('Todos',
+                            style: TextStyle(
+                                fontSize: 11, fontWeight: FontWeight.bold)),
                         icon: Icon(Icons.dashboard_customize_rounded, size: 14),
                       ),
                       ButtonSegment(
                         value: 1,
-                        label: Text('Syncfusion', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                        label: Text('Syncfusion',
+                            style: TextStyle(
+                                fontSize: 11, fontWeight: FontWeight.bold)),
                         icon: Icon(Icons.bolt_rounded, size: 14),
                       ),
                       ButtonSegment(
                         value: 2,
-                        label: Text('Graphic', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                        label: Text('Graphic',
+                            style: TextStyle(
+                                fontSize: 11, fontWeight: FontWeight.bold)),
                         icon: Icon(Icons.bar_chart_rounded, size: 14),
                       ),
                       ButtonSegment(
                         value: 3,
-                        label: Text('MPAndroid', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                        label: Text('MPAndroid',
+                            style: TextStyle(
+                                fontSize: 11, fontWeight: FontWeight.bold)),
                         icon: Icon(Icons.android_rounded, size: 14),
+                      ),
+                      ButtonSegment(
+                        value: 4,
+                        label: Text('Community',
+                            style: TextStyle(
+                                fontSize: 11, fontWeight: FontWeight.bold)),
+                        icon: Icon(Icons.insights_rounded, size: 14),
                       ),
                     ],
                     selected: {_selectedEngineIndex},
@@ -164,7 +242,9 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
                     if (selected) setState(() => _selectedCategoryIndex = i);
                   },
                   selectedColor: tokens.primaryColor,
-                  backgroundColor: isDark ? const Color(0xFF2A2A2A) : const Color(0xFFF1F5F9),
+                  backgroundColor: isDark
+                      ? const Color(0xFF2A2A2A)
+                      : const Color(0xFFF1F5F9),
                   labelStyle: TextStyle(
                     fontSize: 12,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
@@ -175,7 +255,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                     side: BorderSide(
-                      color: isSelected ? tokens.primaryColor : Colors.transparent,
+                      color:
+                          isSelected ? tokens.primaryColor : Colors.transparent,
                     ),
                   ),
                   showCheckmark: false,
@@ -188,7 +269,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(16),
-              children: _buildFilteredCharts(tokens, showSf, showGr, showMp),
+              children:
+                  _buildFilteredCharts(tokens, showSf, showGr, showMp, showCo),
             ),
           ),
         ],
@@ -196,101 +278,126 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     );
   }
 
-  List<Widget> _buildFilteredCharts(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _buildFilteredCharts(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     final widgets = <Widget>[];
 
     // 1. Líneas y Áreas (6 tipos = hasta 12 gráficos)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 1) {
-      widgets.add(_buildSectionHeader('1. Líneas y Áreas', 'Evolución continua y series temporales'));
-      widgets.addAll(_chart1StandardLine(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader(
+          '1. Líneas y Áreas', 'Evolución continua y series temporales'));
+      widgets.addAll(_chart1StandardLine(
+        tokens,
+        showSf,
+        showGr,
+        showMp,
+        showCo,
+      ));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart2SmoothArea(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart2SmoothArea(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart3StepLine(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart3StepLine(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart4GradientArea(tokens, showSf, showGr, showMp));
+      widgets
+          .addAll(_chart4GradientArea(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart5MultiLine(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart5MultiLine(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart6BaselineArea(tokens, showSf, showGr, showMp));
+      widgets
+          .addAll(_chart6BaselineArea(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
     }
 
     // 2. Barras y Columnas (6 tipos = hasta 12 gráficos)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 2) {
-      widgets.add(_buildSectionHeader('2. Barras y Columnas', 'Comparativas categóricas y acumulaciones'));
-      widgets.addAll(_chart7VerticalBar(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader(
+          '2. Barras y Columnas', 'Comparativas categóricas y acumulaciones'));
+      widgets
+          .addAll(_chart7VerticalBar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart8HorizontalBar(tokens, showSf, showGr, showMp));
+      widgets
+          .addAll(_chart8HorizontalBar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart9GroupedBar(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart9GroupedBar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart10StackedBar(tokens, showSf, showGr, showMp));
+      widgets
+          .addAll(_chart10StackedBar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart11NormalizedBar(tokens, showSf, showGr, showMp));
+      widgets.addAll(
+          _chart11NormalizedBar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart12RangeBar(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart12RangeBar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
     }
 
     // 3. Circulares y Radiales (5 tipos = hasta 10 gráficos)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 3) {
-      widgets.add(_buildSectionHeader('3. Circulares y Radiales', 'Proporciones, dominancia y ángulos polares'));
-      widgets.addAll(_chart13Pie(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader('3. Circulares y Radiales',
+          'Proporciones, dominancia y ángulos polares'));
+      widgets.addAll(_chart13Pie(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart14Donut(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart14Donut(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart15Gauge(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart15Gauge(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart16Rose(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart16Rose(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart17RadialBar(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart17RadialBar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
     }
 
     // 4. Puntos y Radar (3 tipos = hasta 6 gráficos)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 4) {
-      widgets.add(_buildSectionHeader('4. Puntos y Radar', 'Dispersión multidimensional y perfiles polares'));
-      widgets.addAll(_chart18Scatter(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader('4. Puntos y Radar',
+          'Dispersión multidimensional y perfiles polares'));
+      widgets.addAll(_chart18Scatter(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart19Bubble(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart19Bubble(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart20Radar(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart20Radar(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
     }
 
     // 5. Avanzados (12 tipos = hasta 24 gráficos)
     if (_selectedCategoryIndex == 0 || _selectedCategoryIndex == 5) {
-      widgets.add(_buildSectionHeader('5. Avanzados: Estadísticos y Densidad', 'Distribuciones y probabilidad'));
-      widgets.addAll(_chart21Heatmap(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader('5. Avanzados: Estadísticos y Densidad',
+          'Distribuciones y probabilidad'));
+      widgets.addAll(_chart21Heatmap(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart22BoxPlot(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart22BoxPlot(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart23Histogram(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart23Histogram(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart24Violin(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart24Violin(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
 
-      widgets.add(_buildSectionHeader('6. Avanzados: Jerárquicos y Proporción', 'Relaciones parte-todo y flujos'));
-      widgets.addAll(_chart25Treemap(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader('6. Avanzados: Jerárquicos y Proporción',
+          'Relaciones parte-todo y flujos'));
+      widgets.addAll(_chart25Treemap(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart26Sunburst(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart26Sunburst(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart27Funnel(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart27Funnel(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
 
-      widgets.add(_buildSectionHeader('7. Avanzados: Multidimensionales y Continuos', 'Correlaciones y bandas'));
-      widgets.addAll(_chart28Parallel(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader(
+          '7. Avanzados: Multidimensionales y Continuos',
+          'Correlaciones y bandas'));
+      widgets.addAll(_chart28Parallel(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart29ScatterMatrix(tokens, showSf, showGr, showMp));
+      widgets.addAll(
+          _chart29ScatterMatrix(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart30BandArea(tokens, showSf, showGr, showMp));
+      widgets.addAll(_chart30BandArea(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
 
-      widgets.add(_buildSectionHeader('8. Avanzados: Financieros y Flujo', 'Trading y evolución orgánica'));
-      widgets.addAll(_chart31Candlestick(tokens, showSf, showGr, showMp));
+      widgets.add(_buildSectionHeader(
+          '8. Avanzados: Financieros y Flujo', 'Trading y evolución orgánica'));
+      widgets
+          .addAll(_chart31Candlestick(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 16));
-      widgets.addAll(_chart32Streamgraph(tokens, showSf, showGr, showMp));
+      widgets
+          .addAll(_chart32Streamgraph(tokens, showSf, showGr, showMp, showCo));
       widgets.add(const SizedBox(height: 24));
     }
 
@@ -305,10 +412,12 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, letterSpacing: -0.3),
+            style: const TextStyle(
+                fontSize: 17, fontWeight: FontWeight.bold, letterSpacing: -0.3),
           ),
           const SizedBox(height: 2),
-          Text(subtitle, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          Text(subtitle,
+              style: const TextStyle(fontSize: 12, color: Colors.grey)),
         ],
       ),
     );
@@ -318,7 +427,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
   // DEFINICIONES DE LOS 32 GRÁFICOS (DUAL ENGINE: SYNCFUSION & GRAPHIC)
   // -------------------------------------------------------------
 
-  List<Widget> _chart1StandardLine(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart1StandardLine(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const points = [
       ChartPoint(x: '01:00', y: 83900),
       ChartPoint(x: '05:00', y: 84200),
@@ -344,10 +454,11 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'LineMark() puro en RectCoord() con Gramática de Gráficos',
         badgeText: '📊 Graphic #1',
         height: 200,
-        chart: GraphicStandardLineChart(data: points, color: tokens.accentColor),
+        chart:
+            GraphicStandardLineChart(data: points, color: tokens.accentColor),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -355,13 +466,30 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #1',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[0].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[0].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(AppChartCard(
+        title: '1. Line Chart (Community)',
+        subtitle: 'LineChart de community_charts_flutter',
+        badgeText: '🧩 Community #1',
+        height: 220,
+        chart: CommunityStandardLineChart(
+          data: points,
+          color: tokens.primaryColor,
+        ),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart2SmoothArea(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart2SmoothArea(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const smoothData = [
       ChartPoint(x: 'Lun', y: 82500),
       ChartPoint(x: 'Mar', y: 83400),
@@ -391,7 +519,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicSmoothAreaChart(data: smoothData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -399,13 +527,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #2',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[1].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[1].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(AppChartCard(
+        title: '2. Smooth Area (Community)',
+        subtitle: 'LineChart con area rellena',
+        badgeText: '🧩 Community #2',
+        height: 220,
+        chart: const CommunitySmoothAreaChart(data: smoothData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart3StepLine(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart3StepLine(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const stepData = [
       ChartPoint(x: '00:00', y: 84000),
       ChartPoint(x: '04:00', y: 84000),
@@ -434,7 +576,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicStepLineChart(data: stepData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -442,13 +584,28 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #3',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[2].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[2].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '3. Step Line (Community)',
+        subtitle: 'LineChart con puntos (stepped no soportado)',
+        badgeText: '🧩 Community #3',
+        height: 220,
+        chart: const CommunityStepLineChart(data: stepData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart4GradientArea(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart4GradientArea(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const gradientData = [
       ChartPoint(x: '00:00', y: 81000),
       ChartPoint(x: '04:00', y: 82300),
@@ -477,7 +634,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicGradientAreaChart(data: gradientData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -485,13 +642,28 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #4',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[3].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[3].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '4. Gradient Area (Community)',
+        subtitle: 'Área con opacidad (gradiente real no soportado)',
+        badgeText: '🧩 Community #4',
+        height: 220,
+        chart: const CommunityGradientAreaChart(data: gradientData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart5MultiLine(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart5MultiLine(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const multiData = [
       ChartPoint(x: 'Ene', y: 42000, series: 'BTC'),
       ChartPoint(x: 'Feb', y: 52000, series: 'BTC'),
@@ -526,7 +698,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicMultiLineChart(data: multiData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -534,13 +706,28 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #5',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[4].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[4].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '5. Multi-Line (Community)',
+        subtitle: 'Múltiples Series en un LineChart',
+        badgeText: '🧩 Community #5',
+        height: 230,
+        chart: const CommunityMultiLineChart(data: multiData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart6BaselineArea(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart6BaselineArea(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const baselineData = [
       ChartPoint(x: '00:00', y: 83600),
       ChartPoint(x: '04:00', y: 83900),
@@ -572,7 +759,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicBaselineAreaChart(data: baselineData, baseline: 84000.0),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -580,13 +767,32 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #6',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[5].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[5].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '6. Baseline Area (Community)',
+        subtitle: 'Puntos coloreados según umbral',
+        badgeText: '🧩 Community #6',
+        height: 220,
+        // ignore: prefer_const_constructors
+        chart: CommunityBaselineAreaChart(
+          data: baselineData,
+          baseline: 84000.0,
+        ),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart7VerticalBar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart7VerticalBar(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const barData = [
       ChartPoint(x: 'BTC', y: 30.5),
       ChartPoint(x: 'ETH', y: 12.4),
@@ -614,7 +820,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicBarChart(data: barData, barColor: tokens.accentColor),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -622,13 +828,30 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #7',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[6].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[6].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(AppChartCard(
+        title: '7. Vertical Bar (Community)',
+        subtitle: 'BarChart vertical de community_charts_flutter',
+        badgeText: '🧩 Community #7',
+        height: 220,
+        chart: CommunityBarChart(
+          data: barData,
+          barColor: tokens.accentColor,
+        ),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart8HorizontalBar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart8HorizontalBar(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const rankData = [
       ChartPoint(x: 'BTC', y: 1680),
       ChartPoint(x: 'ETH', y: 327),
@@ -643,7 +866,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'BarSeries horizontal con ejes correctamente vinculados',
         badgeText: '⚡ Syncfusion #8',
         height: 210,
-        chart: AppBarChart(data: rankData, isHorizontal: true, barColor: tokens.primaryColor),
+        chart: AppBarChart(
+            data: rankData, isHorizontal: true, barColor: tokens.primaryColor),
       ));
     }
     if (showGr) {
@@ -653,10 +877,11 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'IntervalMark con RectCoord(transposed: true)',
         badgeText: '📊 Graphic #8',
         height: 210,
-        chart: GraphicBarChart(data: rankData, isHorizontal: true, barColor: tokens.primaryColor),
+        chart: GraphicBarChart(
+            data: rankData, isHorizontal: true, barColor: tokens.primaryColor),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -664,13 +889,30 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #8',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[7].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[7].buildConfig(_mockCryptos)),
+      ));
+    }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(AppChartCard(
+        title: '8. Horizontal Bar (Community)',
+        subtitle: 'BarChart horizontal de community_charts_flutter',
+        badgeText: '🧩 Community #8',
+        height: 220,
+        chart: CommunityBarChart(
+          data: rankData,
+          isHorizontal: true,
+          barColor: tokens.primaryColor,
+        ),
       ));
     }
     return items;
   }
 
-  List<Widget> _chart9GroupedBar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart9GroupedBar(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const groupedData = [
       {'category': 'BTC', 'group': 'Spot', 'value': 28},
       {'category': 'BTC', 'group': 'Derivados', 'value': 45},
@@ -699,7 +941,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicGroupedBarChart(data: groupedData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -707,13 +949,28 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #9',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[8].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[8].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '9. Grouped Bar (Community)',
+        subtitle: 'BarChart agrupada',
+        badgeText: '🧩 Community #9',
+        height: 230,
+        chart: const CommunityStackedBarChart(data: groupedData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart10StackedBar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart10StackedBar(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const stackedData = [
       {'category': 'Q1', 'type': 'DeFi', 'value': 35},
       {'category': 'Q1', 'type': 'CeFi', 'value': 65},
@@ -742,7 +999,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicStackedBarChart(data: stackedData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -750,18 +1007,57 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #10',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[9].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[9].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '10. Stacked Bar (Community)',
+        subtitle: 'BarGroupingType.stacked',
+        badgeText: '🧩 Community #10',
+        height: 230,
+        chart: const CommunityStackedBarChart(data: stackedData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart11NormalizedBar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart11NormalizedBar(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const normData = [
-      {'category': 'Minado', 'segment': 'Circulante', 'percent': 93.5, 'group': 'Circulante', 'value': 93.5},
-      {'category': 'Minado', 'segment': 'Por Emitir', 'percent': 6.5, 'group': 'Por Emitir', 'value': 6.5},
-      {'category': 'Staking', 'segment': 'Bloqueado', 'percent': 28.0, 'group': 'Bloqueado', 'value': 28.0},
-      {'category': 'Staking', 'segment': 'Libre', 'percent': 72.0, 'group': 'Libre', 'value': 72.0},
+      {
+        'category': 'Minado',
+        'segment': 'Circulante',
+        'percent': 93.5,
+        'group': 'Circulante',
+        'value': 93.5
+      },
+      {
+        'category': 'Minado',
+        'segment': 'Por Emitir',
+        'percent': 6.5,
+        'group': 'Por Emitir',
+        'value': 6.5
+      },
+      {
+        'category': 'Staking',
+        'segment': 'Bloqueado',
+        'percent': 28.0,
+        'group': 'Bloqueado',
+        'value': 28.0
+      },
+      {
+        'category': 'Staking',
+        'segment': 'Libre',
+        'percent': 72.0,
+        'group': 'Libre',
+        'value': 72.0
+      },
     ];
     final items = <Widget>[];
     if (showSf) {
@@ -783,7 +1079,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicNormalizedBarChart(data: normData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -791,25 +1087,76 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #11',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[10].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[10].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '11. Normalized Bar (Community)',
+        subtitle: 'Apilado al 100%',
+        badgeText: '🧩 Community #11',
+        height: 230,
+        chart: const CommunityNormalizedBarChart(data: normData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart12RangeBar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart12RangeBar(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const rangeData = [
-      {'crypto': 'BTC', 'asset': 'BTC', 'min': -1.4, 'max': 2.8, 'low': -1.4, 'high': 2.8},
-      {'crypto': 'ETH', 'asset': 'ETH', 'min': -2.1, 'max': 3.5, 'low': -2.1, 'high': 3.5},
-      {'crypto': 'SOL', 'asset': 'SOL', 'min': -3.2, 'max': 5.1, 'low': -3.2, 'high': 5.1},
-      {'crypto': 'BNB', 'asset': 'BNB', 'min': -1.0, 'max': 2.2, 'low': -1.0, 'high': 2.2},
-      {'crypto': 'XRP', 'asset': 'XRP', 'min': 0.5, 'max': 4.8, 'low': 0.5, 'high': 4.8},
+      {
+        'crypto': 'BTC',
+        'asset': 'BTC',
+        'min': -1.4,
+        'max': 2.8,
+        'low': -1.4,
+        'high': 2.8
+      },
+      {
+        'crypto': 'ETH',
+        'asset': 'ETH',
+        'min': -2.1,
+        'max': 3.5,
+        'low': -2.1,
+        'high': 3.5
+      },
+      {
+        'crypto': 'SOL',
+        'asset': 'SOL',
+        'min': -3.2,
+        'max': 5.1,
+        'low': -3.2,
+        'high': 5.1
+      },
+      {
+        'crypto': 'BNB',
+        'asset': 'BNB',
+        'min': -1.0,
+        'max': 2.2,
+        'low': -1.0,
+        'high': 2.2
+      },
+      {
+        'crypto': 'XRP',
+        'asset': 'XRP',
+        'min': 0.5,
+        'max': 4.8,
+        'low': 0.5,
+        'high': 4.8
+      },
     ];
     final items = <Widget>[];
     if (showSf) {
       items.add(const AppChartCard(
         title: '12. Range Bar Chart (Syncfusion)',
-        subtitle: 'RangeColumnSeries flotante: rango de variación % 24h por activo',
+        subtitle:
+            'RangeColumnSeries flotante: rango de variación % 24h por activo',
         badgeText: '⚡ Syncfusion #12',
         height: 210,
         chart: AppRangeBarChart(data: rangeData),
@@ -819,13 +1166,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '12. Range Bar Chart (Graphic)',
-        subtitle: 'IntervalMark suspendido: rango de variación % 24h por activo',
+        subtitle:
+            'IntervalMark suspendido: rango de variación % 24h por activo',
         badgeText: '📊 Graphic #12',
         height: 210,
         chart: GraphicRangeBarChart(data: rangeData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -833,13 +1181,15 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #12',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[11].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[11].buildConfig(_mockCryptos)),
       ));
     }
     return items;
   }
 
-  List<Widget> _chart13Pie(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart13Pie(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     const pieData = [
       ChartPoint(x: 'BTC', y: 58.2),
       ChartPoint(x: 'ETH', y: 13.5),
@@ -861,13 +1211,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '13. Pie Chart (Graphic)',
-        subtitle: 'IntervalMark con PolarCoord(transposed: true) - Torta completa',
+        subtitle:
+            'IntervalMark con PolarCoord(transposed: true) - Torta completa',
         badgeText: '📊 Graphic #13',
         height: 220,
         chart: GraphicPieChart(data: pieData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -875,13 +1226,26 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #13',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[12].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[12].buildConfig(_mockCryptos)),
       ));
     }
+
+    // ignore: prefer_const_constructors
+    items.add(AppChartCard(
+      title: '13. Pie Chart (Community)',
+      subtitle: 'PieChart de community_charts_flutter',
+      badgeText: '🧩 Community #13',
+      height: 230,
+      // ignore: prefer_const_constructors
+      chart: CommunityPieChart(data: pieData),
+    ));
+
     return items;
   }
 
-  List<Widget> _chart14Donut(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart14Donut(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     const pieData = [
       ChartPoint(x: 'BTC', y: 58.2),
       ChartPoint(x: 'ETH', y: 13.5),
@@ -909,7 +1273,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicDonutChart(data: pieData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -917,13 +1281,25 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #14',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[13].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[13].buildConfig(_mockCryptos)),
       ));
     }
+
+    // ignore: prefer_const_constructors
+    items.add(AppChartCard(
+      title: '14. Donut Chart (Community)',
+      subtitle: 'PieChart con arcWidth reducido',
+      badgeText: '🧩 Community #14',
+      height: 230,
+      // ignore: prefer_const_constructors
+      chart: CommunityPieChart(data: pieData, isDonut: true),
+    ));
     return items;
   }
 
-  List<Widget> _chart15Gauge(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart15Gauge(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     final items = <Widget>[];
     if (showSf) {
       items.add(const AppChartCard(
@@ -938,13 +1314,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '15. Gauge Chart (Graphic)',
-        subtitle: 'PolarCoord(startAngle: -pi, endAngle: 0) - Miedo & Codicia (78.5)',
+        subtitle:
+            'PolarCoord(startAngle: -pi, endAngle: 0) - Miedo & Codicia (78.5)',
         badgeText: '📊 Graphic #15',
         height: 210,
         chart: GraphicGaugeChart(score: 78.5),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -952,13 +1329,28 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #15',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[14].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[14].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '15. Gauge (Community)',
+        subtitle: 'Semicírculo aproximado con PieChart',
+        badgeText: '🧩 Community #15',
+        height: 220,
+        chart: const CommunityGaugeChart(score: 78.5),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart16Rose(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart16Rose(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     const roseData = [
       ChartPoint(x: 'DeFi', y: 65),
       ChartPoint(x: 'Layer 1', y: 90),
@@ -986,7 +1378,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicRoseChart(data: roseData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -994,13 +1386,28 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #16',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[15].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[15].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '16. Rose (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #16',
+        height: 220,
+        chart: CommunityRoseChart(data: roseData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart17RadialBar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart17RadialBar(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const radialData = [
       {'name': 'Seguridad', 'value': 92},
       {'name': 'Liquidez', 'value': 78},
@@ -1027,7 +1434,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicRadialBarChart(data: radialData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1035,13 +1442,28 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #17',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[16].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[16].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      // ignore: prefer_const_constructors
+      items.add(AppChartCard(
+        title: '17. Radial Bar (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #17',
+        height: 220,
+        chart: CommunityRadialBarChart(data: radialData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart18Scatter(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart18Scatter(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const scatterData = [
       {'label': 'BTC', 'x': 1680, 'y': 0.34, 'size': 12, 'group': 'Alta'},
       {'label': 'ETH', 'x': 327, 'y': 0.10, 'size': 10, 'group': 'Alta'},
@@ -1068,7 +1490,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicScatterChart(data: scatterData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1076,13 +1498,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #18',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[17].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[17].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '18. Scatter Plot (Community)',
+        subtitle: 'ScatterPlotChart',
+        badgeText: '🧩 Community #18',
+        height: 220,
+        chart: CommunityScatterChart(data: scatterData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart19Bubble(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart19Bubble(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     const bubbleData = [
       {'label': 'BTC', 'x': 1680, 'y': 0.34, 'size': 32, 'group': 'Top 1'},
       {'label': 'ETH', 'x': 327, 'y': 0.10, 'size': 20, 'group': 'Top 2'},
@@ -1103,13 +1539,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '19. Bubble Chart (Graphic)',
-        subtitle: '3 Dimensiones: Market Cap (X) vs Retorno (Y) vs Volumen (Radio)',
+        subtitle:
+            '3 Dimensiones: Market Cap (X) vs Retorno (Y) vs Volumen (Radio)',
         badgeText: '📊 Graphic #19',
         height: 210,
         chart: GraphicBubbleChart(data: bubbleData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1117,13 +1554,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #19',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[18].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[18].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '19. Bubble Chart (Community)',
+        subtitle: 'ScatterPlotChart con radio variable',
+        badgeText: '🧩 Community #19',
+        height: 220,
+        chart: CommunityBubbleChart(data: bubbleData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart20Radar(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart20Radar(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     const radarData = [
       {'metric': 'Volumen', 'value': 88},
       {'metric': 'Cap. Mercado', 'value': 96},
@@ -1145,13 +1596,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '20. Radar / Spider Chart (Graphic)',
-        subtitle: 'Polígono multidimensional cerrado dentro de su caja de límites',
+        subtitle:
+            'Polígono multidimensional cerrado dentro de su caja de límites',
         badgeText: '📊 Graphic #20',
         height: 220,
         chart: GraphicRadarChart(data: radarData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1159,13 +1611,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #20',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[19].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[19].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '20. Radar Chart (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #20',
+        height: 220,
+        chart: CommunityRadarChart(data: radarData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart21Heatmap(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart21Heatmap(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const heatmapData = [
       {'x': 'Lun', 'y': 'Madrugada', 'value': -1.2},
       {'x': 'Lun', 'y': 'Mañana', 'value': 2.4},
@@ -1191,13 +1657,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '21. Heatmap / Matriz de Calor (Graphic)',
-        subtitle: 'PolygonMark() en RectCoord() con escala de color normalizada',
+        subtitle:
+            'PolygonMark() en RectCoord() con escala de color normalizada',
         badgeText: '📊 Graphic #21',
         height: 210,
         chart: GraphicHeatmapChart(data: heatmapData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1205,17 +1672,52 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #21',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[20].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[20].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '21. Heatmap (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #21',
+        height: 220,
+        chart: CommunityHeatmapChart(data: heatmapData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart22BoxPlot(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart22BoxPlot(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const boxData = [
-      {'asset': 'BTC', 'min': -4.2, 'q1': -1.8, 'median': 0.5, 'q3': 2.1, 'max': 5.3},
-      {'asset': 'ETH', 'min': -6.1, 'q1': -2.4, 'median': 0.2, 'q3': 3.0, 'max': 7.8},
-      {'asset': 'SOL', 'min': -8.5, 'q1': -3.2, 'median': 1.1, 'q3': 4.5, 'max': 11.2},
+      {
+        'asset': 'BTC',
+        'min': -4.2,
+        'q1': -1.8,
+        'median': 0.5,
+        'q3': 2.1,
+        'max': 5.3
+      },
+      {
+        'asset': 'ETH',
+        'min': -6.1,
+        'q1': -2.4,
+        'median': 0.2,
+        'q3': 3.0,
+        'max': 7.8
+      },
+      {
+        'asset': 'SOL',
+        'min': -8.5,
+        'q1': -3.2,
+        'median': 1.1,
+        'q3': 4.5,
+        'max': 11.2
+      },
     ];
     final items = <Widget>[];
     if (showSf) {
@@ -1237,7 +1739,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicBoxPlotChart(data: boxData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1245,13 +1747,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #22',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[21].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[21].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '22. BoxPlot (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #22',
+        height: 220,
+        chart: CommunityBoxPlotChart(data: boxData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart23Histogram(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart23Histogram(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const histData = [
       {'bin': '0-2%', 'frequency': 14},
       {'bin': '2-4%', 'frequency': 28},
@@ -1279,7 +1795,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicHistogramChart(data: histData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1287,13 +1803,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #23',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[22].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[22].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '23. Histogram (Community)',
+        subtitle: 'BarChart con barras contiguas',
+        badgeText: '🧩 Community #23',
+        height: 220,
+        chart: CommunityHistogramChart(data: histData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart24Violin(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart24Violin(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     const violinData = [
       {'level': '-3%', 'density': 10},
       {'level': '-2%', 'density': 25},
@@ -1323,7 +1853,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicViolinPlotChart(data: violinData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1331,20 +1861,69 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #24',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[23].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[23].buildConfig(_mockCryptos)),
+      ));
+    }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '24. Violin Plot (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #24',
+        height: 220,
+        chart: CommunityViolinPlotChart(data: violinData),
       ));
     }
     return items;
   }
 
-  List<Widget> _chart25Treemap(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart25Treemap(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const treeData = [
-      {'symbol': 'BTC', 'name': 'Bitcoin', 'value': 1680, 'change': 0.34, 'price': 84206.0},
-      {'symbol': 'ETH', 'name': 'Ethereum', 'value': 327, 'change': 0.10, 'price': 2677.0},
-      {'symbol': 'SOL', 'name': 'Solana', 'value': 63, 'change': 1.75, 'price': 116.6},
-      {'symbol': 'USDT', 'name': 'Tether', 'value': 183, 'change': -0.07, 'price': 1.0},
-      {'symbol': 'BNB', 'name': 'Binance', 'value': 107, 'change': 0.69, 'price': 773.2},
-      {'symbol': 'XRP', 'name': 'Ripple', 'value': 91, 'change': 2.42, 'price': 1.53},
+      {
+        'symbol': 'BTC',
+        'name': 'Bitcoin',
+        'value': 1680,
+        'change': 0.34,
+        'price': 84206.0
+      },
+      {
+        'symbol': 'ETH',
+        'name': 'Ethereum',
+        'value': 327,
+        'change': 0.10,
+        'price': 2677.0
+      },
+      {
+        'symbol': 'SOL',
+        'name': 'Solana',
+        'value': 63,
+        'change': 1.75,
+        'price': 116.6
+      },
+      {
+        'symbol': 'USDT',
+        'name': 'Tether',
+        'value': 183,
+        'change': -0.07,
+        'price': 1.0
+      },
+      {
+        'symbol': 'BNB',
+        'name': 'Binance',
+        'value': 107,
+        'change': 0.69,
+        'price': 773.2
+      },
+      {
+        'symbol': 'XRP',
+        'name': 'Ripple',
+        'value': 91,
+        'change': 2.42,
+        'price': 1.53
+      },
     ];
     final items = <Widget>[];
     if (showSf) {
@@ -1366,7 +1945,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicTreemapChart(data: treeData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1374,13 +1953,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #25',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[24].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[24].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '25. Treemap (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #25',
+        height: 220,
+        chart: CommunityTreemapChart(data: treeData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart26Sunburst(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart26Sunburst(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const sunData = [
       {'name': 'Capa 1', 'value': 55},
       {'name': 'DeFi', 'value': 22},
@@ -1401,13 +1994,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '26. Sunburst Chart (Graphic)',
-        subtitle: 'Anillos concéntricos proporcionales estrictamente delimitados',
+        subtitle:
+            'Anillos concéntricos proporcionales estrictamente delimitados',
         badgeText: '📊 Graphic #26',
         height: 210,
         chart: GraphicSunburstChart(data: sunData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1415,13 +2009,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #26',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[25].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[25].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '26. Sunburst (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #26',
+        height: 220,
+        chart: CommunitySunburstChart(data: sunData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart27Funnel(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart27Funnel(ChartThemeTokens tokens, bool showSf, bool showGr,
+      bool showMp, bool showCo) {
     const funnelData = [
       {'stage': '1. Impresiones', 'value': 10000},
       {'stage': '2. Visitas Par', 'value': 6200},
@@ -1442,13 +2050,14 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(const AppChartCard(
         title: '27. Funnel / Embudo (Graphic)',
-        subtitle: 'Etapas de conversión financiera — trapezoides proporcionales',
+        subtitle:
+            'Etapas de conversión financiera — trapezoides proporcionales',
         badgeText: '📊 Graphic #27',
         height: 260,
         chart: GraphicFunnelChart(data: funnelData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1456,13 +2065,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #27',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[26].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[26].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '27. Funnel (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #27',
+        height: 220,
+        chart: CommunityFunnelChart(data: funnelData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart28Parallel(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart28Parallel(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const parallelData = [
       {'crypto': 'BTC', 'metric': 'Volumen', 'score': 95},
       {'crypto': 'BTC', 'metric': 'Cap', 'score': 100},
@@ -1497,7 +2120,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicParallelCoordChart(data: parallelData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1505,13 +2128,26 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #28',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[27].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[27].buildConfig(_mockCryptos)),
+      ));
+    }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '28. Parallel Coordinates (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #28',
+        height: 220,
+        chart: CommunityParallelCoordChart(data: parallelData),
       ));
     }
     return items;
   }
 
-  List<Widget> _chart29ScatterMatrix(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart29ScatterMatrix(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const matrixData = [
       {'token': 'BTC', 'pair': 'Cap vs Vol', 'correlation': 0.88},
       {'token': 'BTC', 'pair': 'Vol vs 24h', 'correlation': 0.45},
@@ -1527,7 +2163,8 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
     if (showSf) {
       items.add(const AppChartCard(
         title: '29. Matriz de Dispersión (Syncfusion Hub)',
-        subtitle: 'Matriz cruzando correlaciones con burbujas y escala de color',
+        subtitle:
+            'Matriz cruzando correlaciones con burbujas y escala de color',
         badgeText: '⚡ Syncfusion #29',
         height: 220,
         chart: AppScatterMatrixChart(data: matrixData),
@@ -1543,7 +2180,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicScatterMatrixChart(data: matrixData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1551,13 +2188,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #29',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[28].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[28].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '29. Scatter Matrix (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #29',
+        height: 220,
+        chart: CommunityScatterMatrixChart(data: matrixData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart30BandArea(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart30BandArea(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const bandData = [
       {'time': '10:00', 'price': 84100, 'upper': 84700, 'lower': 83500},
       {'time': '12:00', 'price': 84350, 'upper': 84900, 'lower': 83700},
@@ -1585,7 +2236,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicBandAreaChart(data: bandData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1593,19 +2244,62 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #30',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[29].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[29].buildConfig(_mockCryptos)),
+      ));
+    }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '30. Band Area (Community)',
+        subtitle: 'LineChart con 3 series superpuestas',
+        badgeText: '🧩 Community #30',
+        height: 220,
+        chart: const CommunityBandAreaChart(data: bandData),
       ));
     }
     return items;
   }
 
-  List<Widget> _chart31Candlestick(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart31Candlestick(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const ohlcData = [
-      {'date': '09:00', 'open': 83800, 'close': 84200, 'high': 84500, 'low': 83600},
-      {'date': '10:00', 'open': 84200, 'close': 84000, 'high': 84350, 'low': 83900},
-      {'date': '11:00', 'open': 84000, 'close': 84450, 'high': 84600, 'low': 83950},
-      {'date': '12:00', 'open': 84450, 'close': 84150, 'high': 84500, 'low': 84050},
-      {'date': '13:00', 'open': 84150, 'close': 84650, 'high': 84800, 'low': 84100},
+      {
+        'date': '09:00',
+        'open': 83800,
+        'close': 84200,
+        'high': 84500,
+        'low': 83600
+      },
+      {
+        'date': '10:00',
+        'open': 84200,
+        'close': 84000,
+        'high': 84350,
+        'low': 83900
+      },
+      {
+        'date': '11:00',
+        'open': 84000,
+        'close': 84450,
+        'high': 84600,
+        'low': 83950
+      },
+      {
+        'date': '12:00',
+        'open': 84450,
+        'close': 84150,
+        'high': 84500,
+        'low': 84050
+      },
+      {
+        'date': '13:00',
+        'open': 84150,
+        'close': 84650,
+        'high': 84800,
+        'low': 84100
+      },
     ];
     final items = <Widget>[];
     if (showSf) {
@@ -1629,7 +2323,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicCandlestickChart(data: ohlcData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1637,13 +2331,27 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #31',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[30].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[30].buildConfig(_mockCryptos)),
       ));
     }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '31. Candlestick (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #31',
+        height: 220,
+        chart: CommunityCandlestickChart(data: ohlcData),
+      ));
+    }
+
     return items;
   }
 
-  List<Widget> _chart32Streamgraph(ChartThemeTokens tokens, bool showSf, bool showGr, bool showMp) {
+  List<Widget> _chart32Streamgraph(ChartThemeTokens tokens, bool showSf,
+      bool showGr, bool showMp, bool showCo) {
     const streamData = [
       {'date': '00:00', 'type': 'BTC', 'value': 28},
       {'date': '03:00', 'type': 'BTC', 'value': 32},
@@ -1690,7 +2398,7 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         chart: GraphicStreamgraphChart(data: streamData),
       ));
     }
-    
+
     if (showMp) {
       if (items.isNotEmpty) items.add(const SizedBox(height: 12));
       items.add(AppChartCard(
@@ -1698,7 +2406,19 @@ class _ChartsGalleryScreenState extends ConsumerState<ChartsGalleryScreen> {
         subtitle: 'Renderizado nativo con MPAndroidChart',
         badgeText: '🤖 Android #32',
         height: 250,
-        chart: MpChartView(config: ChartCatalog.allCharts[31].buildConfig(_mockCryptos)),
+        chart: MpChartView(
+            config: ChartCatalog.allCharts[31].buildConfig(_mockCryptos)),
+      ));
+    }
+
+    if (showCo) {
+      if (items.isNotEmpty) items.add(const SizedBox(height: 12));
+      items.add(const AppChartCard(
+        title: '32. Streamgraph (Community)',
+        subtitle: 'No soportado por community_charts_flutter',
+        badgeText: '🧩 Community #32',
+        height: 220,
+        chart: CommunityStreamgraphChart(data: streamData),
       ));
     }
     return items;

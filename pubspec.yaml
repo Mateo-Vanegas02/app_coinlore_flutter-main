@@ -1,10 +1,10 @@
 name: app_coinlore_flutter
 description: A Flutter app to display cryptocurrency data using CoinLore API.
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   syncfusion_flutter_charts: ^34.2.9
   graphic: ^2.7.0
+  community_charts_flutter: ^1.0.4
 
 dev_dependencies:
   flutter_test:
